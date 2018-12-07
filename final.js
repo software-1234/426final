@@ -388,7 +388,7 @@ console.log('flights?filter[departure_id]=' + depart + 'filter[arrival_id]='+arr
                     //  arrival_id_new = response[0].id;
 
                     $('#resultsDiv').empty();
-                      $('#resultsDiv').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Which One?</th>    <th>Airline</th> <th>Flight Number</th> <th>Departure Time</th> <th>Arrival Time</th> <th>Plane Model</th> </tr> </thead> <tbody> </tbody> <table>");
+                      $('#resultsDiv').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Which One?</th>    <th>Airline</th> <th>Flight Number</th> <th>Departure Time</th> <th>Arrival Time</th> <th>Plane Model</th> <th>View Seatmap</th> </tr> </thead> <tbody> </tbody> <table>");
                       for(var i=0;i<flightResults.length;i++){
                 getAirline(parseInt(response[i].plane_id),flightResults,i);
               }
@@ -418,6 +418,7 @@ function getPlane(){
 function getAirline(airlineID,flightResults,number,planeID){
   //console.log("hhh");
   var pid=0;
+  var seatLink;
   $.ajax(rootUrl + 'airlines?' + 'filter[id]=' + airlineID,
          {
               type: 'GET',
@@ -432,10 +433,13 @@ function getAirline(airlineID,flightResults,number,planeID){
                             success: (response) => {
 
                               pid = response[number].name;
+                              seatLink = response[number].seatmap_url;
                             }
                           }).then(function(){
-                var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td></tr>";
+                var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+//<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
                 console.log("hi");
+                 $('.modal').modal();
                  $('#flightTable tbody').append(result);
               //  console.log(response);
 
