@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Parallax Template - Materialize</title>
+  <title>Flight App</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,21 +13,22 @@
 </head>
 
 <body>
-
+<div id="myHeader">
   <div id="index-banner" class="parallax-container">
+    <div class="parallax"><img src="images/test.jpg"></div>
+      </div>
     <div class="section no-pad-bot">
       <div class="container">
-        <br><br>
         <h1 class="header center teal-text text-lighten-2">Flight Reservation App</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-        </div>
-        <br><br>
 
-      </div>
+
+
     </div>
   </div>
-
+  <div id="index-banner" class="parallax-container">
+    <div class="parallax"><img src="images/travel-banner.jpg"></div>
+      </div>
+</div>
   <!-- reservation card -->
 
   <div id="reserveDiv">
@@ -35,6 +36,7 @@
       <div class="col s13 m6">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
+              <h3 class="header center teal-text text-lighten-2">Make a Reservation</h3>
             <div class="row">
               <div class="input-field col s6">
                 <input value="RDU" id="departAirport" type="text" class="validate">
@@ -43,15 +45,23 @@
               <div class="input-field col s6">
                 <input value="MCO" id="arriveAirport" type="text" class="validate">
                 <label class="active" for="arriveAirport">Flying To</label>
-                <!-- </div>
-                            <div class="input-field col s6">
+              </div>
+              <!-- <div class="input-field col s6">
                                 <input value="Airline" id="airlineType" type="text" class="validate">
                                 <label class="active" for="airlineType">Preferred Airline</label>
                             </div>
                         </div> -->
+              <div class="input-field col s6">
                 <input type="date" id="start" name="trip-start" value="2018-12-06" min="2018-12-01" max="2019-12-31">
-                <!-- <p>Departing Time</p> -->
-                <!-- <div class="row">
+                <label class="active" for="start">Departure Date</label>
+              </div>
+              <div class="input-field col s6">
+                <input type="date" id="end" name="trip-start" value="2018-12-06" min="2018-12-01" max="2019-12-31">
+
+                <label class="active" for="end">Return Date</label>
+              </div>
+              <!-- <p>Departing Time</p> -->
+              <!-- <div class="row">
                             <div class="input-field col s6">
                                 <input value="YYYY" id="departYear" type="text" class="validate">
                                 <label class="active" for="departYear">Year</label>
@@ -70,35 +80,77 @@
                             </div>
                         </div> -->
 
-                <button id="submitButton" class="btn waves-effect waves-light" type="submit" name="action">Submit
-                </button>
-        
-                <button id="continueButton" class="btn waves-effect waves-light" type="submit" name="action">Continue
-                  <i class="material-icons right">send</i>
-                </button>
-              </div>
+              <button id="searchButton" class="btn waves-effect waves-light" type="submit" name="action">Search
+              </button>
+
+              <!-- <button id="continueButton" class="btn waves-effect waves-light" type="submit" name="action">Continue
+                <i class="material-icons right">send</i>
+              </button> -->
             </div>
           </div>
         </div>
       </div>
+    </div>
+</div>
 
 
+    <!-- resultsdiv -->
+    <div id="resultsDiv">
 
-      <!-- resultsdiv -->
-      <div id="resultsDiv">
-
+    </div>
+    <div id="infoDiv">
+      <h3> Please enter your info: </h3>
+      <div class="row">
+  <form class="col s12">
+    <div class="row">
+      <div class="input-field col s6">
+        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        <label for="first_name">First Name</label>
       </div>
-      <!-- confirmation -->
-      <div id="confirmationDiv">
+      <div class="input-field col s6">
+        <input id="last_name" type="text" class="validate">
+        <label for="last_name">Last Name</label>
       </div>
-      <!-- confirmation -->
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="age" type="text" class="validate">
+        <label for="age">Age</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="gender" type="text" class="validate">
+        <label for="gender">Gender</label>
+      </div>
+    </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="cc" type="text" class="validate">
+          <label for="cc">Credit Card Number</label>
+        </div>
+    </div>
+    <button id="submitButton" class="btn waves-effect waves-light" type="submit" name="action">Reserve
+    </button>
+  </form>
+</div>
+    </div>
+    <!-- confirmation -->
+    <div id="confirmationDiv">
+
+      <div id="weatherDiv">
+        
+      </div>
+    </div>
+    <!-- confirmation -->
 
 
-      <!--  Scripts-->
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-      <script src="materialize.js"></script>
-      <script src="init.js"></script>
-      <script src="final.js"></script>
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="materialize.js"></script>
+    <script src="init.js"></script>
+    <script src="final.js"></script>
 
 </body>
 

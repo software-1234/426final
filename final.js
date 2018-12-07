@@ -4,11 +4,63 @@
 //var departure_id_new=0;
 // arrival_id_new=0, airline_id_new=0, joinedDate=0;
 var rootUrl = "http://comp426.cs.unc.edu:3001/";
-
+var city;
 $(document).ready(function() {
+  $('#infoDiv').hide();
+  $('#submitButton').on('click', function(e) {
+    e.preventDefault();
+    console.log("aaaaa");
+    let first_name = $('#first_name').val();
+    let last_name = $('#last_name').val();
+    let age = $('#age').val();
+    let gender= $('#gender').val();
 
+    $.ajax(rootUrl + 'tickets?' + 'first_name=' +  encodeURI(first_name)+ '&last_name=' + encodeURI(last_name) + '&age=' + encodeURI(age) + '&gender=' + encodeURI(gender),
+       {
+            type: 'POST',
+            //dataType: 'json',
+            data: {
+    "ticket": {
+        "first_name": first_name,
+        "last_name": last_name,
+        "age": parseInt(age),
+        "gender": gender,
+        "is_purchased": true,
+    }
+},
+
+            xhrFields: {withCredentials: true},
+            success: (response) => {
+                    console.log('success!');
+                    $('#infoDiv').hide();
+
+                    $.get("http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=962b8524d03d93b4c38d49b00d0002cf",function(data){
+
+                       //{
+                          //  type: 'GET',
+                          //  dataType: 'json',
+                          //  xhrFields: {withCredentials: true},
+                          //  success: (response) => {
+                          console.log(data);
+                          var city = data.name;
+                          //((K-273.15)*1.8)+32
+var temp = Math.round(((data.main.temp -273.15) / 1.8) + 32);
+$('#confirmationDiv').append("Your trip is booked! We hope you have a great vacation!");
+$(weatherDiv).append('city:'+city + ' ' + 'temp: ' + temp);
+
+                                console.log('hello');
+                          //  }
+                    //   });
+
+          //  }
+       });
+       }
+
+  });
+});
     //puts value into joinedDate, depature_id_new, arrival_id_new
-    $('#submitButton').on('click', function() {
+
+    $('#searchButton').on('click', function() {
         let fromAirport = $('#departAirport').val();
         let toAirport = $('#arriveAirport').val();
 
@@ -107,14 +159,15 @@ function findAirportDepartureId(aDI,aAI) {
                                                       return;
                                                 }
                                                    aID =  response[0].id;
+                                                   city =response[0].city;
 
 
                                            },
 
 
                                       }).then(function(response){
-                                        console.log(aID);
-                                        console.log(dID);
+                                        console.log("aid: " + aID);
+                                        console.log("did: " + dID);
                                         if(aID!=0 && dID !=0){
                                         insertIntoResultsDiv(dID,aID);
                                       }
@@ -124,6 +177,7 @@ function findAirportDepartureId(aDI,aAI) {
 
                        }
                   }).then(function(response) {
+
 
 
   }
@@ -190,13 +244,13 @@ function insertIntoResultsDiv(depart,arrive){
     var flightResults;
     console.log(depart);
     console.log(arrive);
-  $.ajax(rootUrl + 'flights?' + 'filter[departure_id]=' + depart + 'filter[arrival_id]='+arrive,
+  $.ajax(rootUrl + 'flights?' + 'filter[departure_id]=' + depart +'&filter[arrival_id]='+arrive ,
          {
               type: 'GET',
               dataType: 'json',
               xhrFields: {withCredentials: true},
               success: (response) => {
-
+console.log('flights?filter[departure_id]=' + depart + 'filter[arrival_id]='+arrive);
                 flightResults = response;
               //  console.log(response);
 
@@ -205,7 +259,7 @@ function insertIntoResultsDiv(depart,arrive){
                     //  arrival_id_new = response[0].id;
 
                     $('#resultsDiv').empty();
-                      $('#resultsDiv').append("<table id='flightTable'> <thead> <tr id='headerRow'>   <th>Airline</th> <th>Flight Number</th> <th>Departure Time</th> <th>Arrival Time</th> </tr> </thead> <tbody> </tbody> <table>");
+                      $('#resultsDiv').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Which One?</th>    <th>Airline</th> <th>Flight Number</th> <th>Departure Time</th> <th>Arrival Time</th> <th>Plane Model</th> </tr> </thead> <tbody> </tbody> <table>");
                       for(var i=0;i<flightResults.length;i++){
                 getAirline(parseInt(response[i].plane_id),flightResults,i);
               }
@@ -232,22 +286,43 @@ function getPlane(){
 
 }
 
-function getAirline(airlineID,flightResults,number){
+function getAirline(airlineID,flightResults,number,planeID){
   //console.log("hhh");
+  var pid=0;
   $.ajax(rootUrl + 'airlines?' + 'filter[id]=' + airlineID,
          {
               type: 'GET',
               dataType: 'json',
               xhrFields: {withCredentials: true},
               success: (response) => {
+                $.ajax(rootUrl + 'planes?' + 'filter[id]=' + planeID,
+                       {
+                            type: 'GET',
+                            dataType: 'json',
+                            xhrFields: {withCredentials: true},
+                            success: (response) => {
 
-                var result = "<tr><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[0].arrives_at.toString().substring(11,16) + "</td></tr>";
+                              pid = response[number].name;
+                            }
+                          }).then(function(){
+                var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td></tr>";
+                console.log("hi");
                  $('#flightTable tbody').append(result);
               //  console.log(response);
 
               //  console.log("ee");
               //  console.log(response[0]);
                     //  arrival_id_new = response[0].id;
-              }
-         });
+            });
+
+         }
+       });
+}
+function selectFlight(flightNum){
+  console.log(flightNum);
+  console.log($('#select_'+flightNum).data("flightnum"));
+ $('#reserveDiv').hide();
+  $('#resultsDiv').hide();
+  $('#myHeader').hide();
+  $('#infoDiv').show();
 }
