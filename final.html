@@ -38,28 +38,50 @@
           <div class="card-content white-text">
               <h3 class="header center teal-text text-lighten-2">Make a Reservation</h3>
             <div class="row">
-              <div class="input-field col s6">
-                <input value="RDU" id="departAirport" type="text" class="validate">
+              <div class="input-field col s12">
+                <input value="LAX" id="departAirport" type="text" class="validate">
                 <label class="active" for="departAirport">Flying From</label>
               </div>
-              <div class="input-field col s6">
-                <input value="MCO" id="arriveAirport" type="text" class="validate">
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input value="OAK" id="arriveAirport" type="text" class="validate">
                 <label class="active" for="arriveAirport">Flying To</label>
               </div>
+</div>
+
+
+
               <!-- <div class="input-field col s6">
                                 <input value="Airline" id="airlineType" type="text" class="validate">
                                 <label class="active" for="airlineType">Preferred Airline</label>
                             </div>
                         </div> -->
+                        <div class="row">
               <div class="input-field col s6">
-                <input type="date" id="start" name="trip-start" value="2018-12-06" min="2018-12-01" max="2019-12-31">
+                <input type="date" id="start" name="trip-start" value="2018-12-10" min="2018-12-01" max="2019-12-31">
                 <label class="active" for="start">Departure Date</label>
               </div>
               <div class="input-field col s6">
-                <input type="date" id="end" name="trip-start" value="2018-12-06" min="2018-12-01" max="2019-12-31">
+                <input type="date" id="end" name="trip-start" value="2018-12-10" min="2018-12-01" max="2019-12-31">
 
                 <label class="active" for="end">Return Date</label>
               </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <select>
+                  <option value="" disabled selected>How many tickets do you want to book?</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+
+              </div>
+</div>
+
               <!-- <p>Departing Time</p> -->
               <!-- <div class="row">
                             <div class="input-field col s6">
@@ -121,8 +143,19 @@
     </div>
     <div class="row">
       <div class="input-field col s12">
-        <input id="gender" type="text" class="validate">
-        <label for="gender">Gender</label>
+        <label>
+  <input class="with-gap" id="male" name="gender" type="radio"  />
+  <span>Male</span>
+</label>
+</div>
+  <div class="input-field col s12">
+<label>
+  <input class="with-gap" name="gender" id="female" type="radio"  />
+  <span>Female</span>
+</label>
+</div>
+        <!-- <input id="gender" type="radio" class="validate">
+        <label for="gender">Gender</label> -->
       </div>
     </div>
       <div class="row">
@@ -140,7 +173,7 @@
     <div id="confirmationDiv">
 
       <div id="weatherDiv">
-        
+
       </div>
     </div>
     <!-- confirmation -->
