@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Parallax Template - Materialize</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="final.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="final.css" type="text/css" rel="stylesheet" media="screen,projection" />
 </head>
+
 <body>
 
   <div id="index-banner" class="parallax-container">
@@ -25,31 +27,31 @@
       </div>
     </div>
   </div>
-    
-    <!-- reservation card -->
-    
-    
-    <div id="reserveDiv"> 
-        <div class="row">
-            <div class="col s13 m6">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <input value="Airport" id="departAirport" type="text" class="validate">
-                                <label class="active" for="departAirport">Flying From</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input value="Airport" id="arriveAirport" type="text" class="validate">
-                                <label class="active" for="arriveAirport">Flying To</label>
-                            </div>
+
+  <!-- reservation card -->
+
+  <div id="reserveDiv">
+    <div class="row">
+      <div class="col s13 m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <div class="row">
+              <div class="input-field col s6">
+                <input value="RDU" id="departAirport" type="text" class="validate">
+                <label class="active" for="departAirport">Flying From</label>
+              </div>
+              <div class="input-field col s6">
+                <input value="MCO" id="arriveAirport" type="text" class="validate">
+                <label class="active" for="arriveAirport">Flying To</label>
+                <!-- </div>
                             <div class="input-field col s6">
                                 <input value="Airline" id="airlineType" type="text" class="validate">
-                                <label class="active" for="airlineType">Airline Service</label>
+                                <label class="active" for="airlineType">Preferred Airline</label>
                             </div>
-                        </div>
-                        <p>Departing Time</p>
-                        <div class="row">
+                        </div> -->
+                <input type="date" id="start" name="trip-start" value="2018-12-06" min="2018-12-01" max="2019-12-31">
+                <!-- <p>Departing Time</p> -->
+                <!-- <div class="row">
                             <div class="input-field col s6">
                                 <input value="YYYY" id="departYear" type="text" class="validate">
                                 <label class="active" for="departYear">Year</label>
@@ -66,35 +68,38 @@
                                 <input value="00:00" id="departTime" type="text" class="validate">
                                 <label class="active" for="departTime">Time</label>
                             </div>
-                        </div>
-                        
-                        <button id="submitButton" class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                        </button>
-                        <button id="continueButton" class="btn waves-effect waves-light" type="submit" name="action">Continue
-                        <i class="material-icons right">send</i>
-                        </button>
-                    </div>
-                </div>
+                        </div> -->
+
+                <button id="submitButton" class="btn waves-effect waves-light" type="submit" name="action">Submit
+                </button>
+        
+                <button id="continueButton" class="btn waves-effect waves-light" type="submit" name="action">Continue
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-
-    
-    
-    <!-- reservation card -->
-    
-    <!-- confirmation -->
-    <div id="confirmationDiv">
-    </div>
-    <!-- confirmation -->
+      </div>
 
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="materialize.js"></script>
-  <script src="init.js"></script>
-  <script src="final.js"></script>
 
-  </body>
+      <!-- resultsdiv -->
+      <div id="resultsDiv">
+
+      </div>
+      <!-- confirmation -->
+      <div id="confirmationDiv">
+      </div>
+      <!-- confirmation -->
+
+
+      <!--  Scripts-->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="materialize.js"></script>
+      <script src="init.js"></script>
+      <script src="final.js"></script>
+
+</body>
+
 </html>
