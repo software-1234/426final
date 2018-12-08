@@ -8,6 +8,7 @@ var city;
 
 
 $(document).ready(function() {
+
   function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
@@ -172,6 +173,8 @@ $(document).ready(function() {
 var temp = Math.round(((data.main.temp -273.15) / 1.8) + 32);
 $('#confirmationDiv').append("Your trip is booked! We hope you have a great vacation!");
 $(weatherDiv).append('city:'+city + ' ' + 'temp: ' + temp);
+$(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">Current Weather Conditions</span>'
+        + '<p>The current weather at your destination is: '+ temp +' degrees F </p>  </div> </div> </div> </div>');
 
                                 console.log('hello');
                           //  }

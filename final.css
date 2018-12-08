@@ -54,6 +54,12 @@ p {
 .input-field{
   color:white;
 }
+.active{
+  color:black;
+}
+.autocomplete-items{
+  color:black;
+}
 footer.page-footer {
   margin: 0;
 }
