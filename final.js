@@ -8,7 +8,7 @@ var city;
 
 
 $(document).ready(function() {
-
+$('.tabs').tabs();
   function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
@@ -35,7 +35,7 @@ $(document).ready(function() {
             /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
             /*make the matching letters bold:*/
-            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML =  arr[i].substr(0, val.length) ;
             b.innerHTML += arr[i].substr(val.length);
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
@@ -121,6 +121,9 @@ $(document).ready(function() {
                     console.log(airports);
                       autocomplete(document.getElementById("departAirport"), airports);
                         autocomplete(document.getElementById("arriveAirport"), airports);
+
+                        autocomplete(document.getElementById("departAirport1"), airports);
+                          autocomplete(document.getElementById("arriveAirport1"), airports);
               }
          });
 
@@ -188,6 +191,42 @@ $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="c
 });
     //puts value into joinedDate, depature_id_new, arrival_id_new
 
+
+
+    $('#searchButton1').on('click', function() {
+        let fromAirport = $('#departAirport1').val();
+        var abbreviation = fromAirport.split('(');
+        fromAirport = abbreviation[1].substring(0,3);
+        console.log(fromAirport);
+        let toAirport = $('#arriveAirport1').val();
+        var abbreviation1 = toAirport.split('(');
+        toAirport = abbreviation1[1].substring(0,3);
+        let pickedAirline = $('#airlineType').val();
+        console.log("FROM: " + fromAirport);
+          console.log("TO: " +toAirport);
+        // let fromYear = $('#departYear').val();
+        // let fromMonth = $('#departMonth').val();
+        // let fromDay = $('#departDay').val();
+        // let fromTime = $('#departTime').val();
+      //  console.log(toAirport);
+      //  console.log(fromAirport);
+        // joinedDate = fromYear + '-' + fromMonth + '-' + fromDay + 'T' + fromTime + ':00.000Z';
+
+        //puts value into departure_id_new
+        findAirportDepartureId(fromAirport,toAirport);
+
+        //console.log(departure_id_new);
+        //puts value into arrival_id_new
+        //findAirportArrivalId(toAirport);
+
+        //puts value into airline_id_new
+        //findAirlineId(pickedAirline);
+        //  console.log("done");
+      //  console.log("here: " + departure_id_new);
+
+      //  insertIntoResultsDiv(departure_id_new);
+
+    });
     $('#searchButton').on('click', function() {
         let fromAirport = $('#departAirport').val();
         var abbreviation = fromAirport.split('(');
