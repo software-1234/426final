@@ -13,13 +13,14 @@
 </head>
 
 <body>
+
   <div class="navbar-fixed">
   <nav>
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo">Travel Anywhere</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="">Your Account</a></li>
-        <li><a href="">My trips</a></li>
+        <li><button id="homebtn"class="btn-large waves-effect waves-light" >Home</button></li>
+        <li><button id="tripsbtn" class="btn-large waves-effect waves-light">My trips</button></li>
       </ul>
     </div>
   </nav>
@@ -42,7 +43,7 @@
       </div>
 </div>
   <!-- reservation card -->
-
+<div id="homepage">
   <div id="reserveDiv">
     <div class="row">
       <div class="col s13 m6">
@@ -82,7 +83,7 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <select>
+                <select id="amount">
                   <option value="" disabled selected>How many tickets do you want to book?</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -93,7 +94,7 @@
 
               </div>
 </div>
-
+<div id="modale"></div>
               <!-- <p>Departing Time</p> -->
               <!-- <div class="row">
                             <div class="input-field col s6">
@@ -125,14 +126,18 @@
         </div>
       </div>
     </div>
-</div>
+
 
 
     <!-- resultsdiv -->
     <div id="resultsDiv">
 
     </div>
+    <div id="returnDiv">
+
+    </div>
     <div id="infoDiv">
+      <div id="flightinfo"></div>
       <h3> Please enter your info: </h3>
       <div class="row">
   <form class="col s12">
@@ -153,6 +158,14 @@
         <label for="age">Age</label>
       </div>
     </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="email" type="text" class="validate">
+        <label for="email">Email</label>
+      </div>
+    </div>
+
     <div class="row">
       <div class="input-field col s12">
         <label>
@@ -170,17 +183,32 @@
         <label for="gender">Gender</label> -->
       </div>
     </div>
+
+
       <div class="row">
         <div class="input-field col s12">
           <input id="cc" type="text" class="validate">
           <label for="cc">Credit Card Number</label>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+    <button id="holdButton" class="btn waves-effect waves-light" type="submit" name="action">Put on Hold
+    </button>
     <button id="submitButton" class="btn waves-effect waves-light" type="submit" name="action">Reserve
+    </button>
+    <button id="roundtripButton" class="btn waves-effect waves-light" type="submit" name="action">Reserve
     </button>
   </form>
 </div>
-    </div>
+
     <!-- confirmation -->
     <div id="confirmationDiv">
 
@@ -189,6 +217,19 @@
 
       </div>
     </div>
+  </div>
+  <div id="tripspage">
+    
+    <div id="tripstable">
+
+    </div>
+    <br> </br>
+
+    <div id="ititable">
+
+    </div>
+  </div>
+
     <!-- confirmation -->
 
 
