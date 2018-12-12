@@ -502,7 +502,7 @@ function selectFlight(flightNum){
   $('#myHeader').hide();
   $('#infoDiv').show();
 }
-=======
+
 /*jslint browser: true*/
 /*global $, jQuery*/
 
@@ -519,6 +519,8 @@ $(document).ready(function() {
     e.preventDefault();
     $('#homepage').show();
     $('#tripspage').hide();
+    $('#confirmationDiv').empty();
+    $('#reserveDiv').show();
       $('#myHeader').show();
 
   });
@@ -945,113 +947,8 @@ function makeid() {
 
   return text;
 }
-function findAirportDepartureId(aDI,aAI,isreturn) {
-  //console.log("start");
-  var dID = 0;
-  var aID = 0;
-  if(aDI.length!=3){
-
-//console.log("lengthjfdsl");
-    $.ajax(rootUrl + 'airports?' + 'filter[name]=' + encodeURI(aDI),
-           {
-                type: 'GET',
-                dataType: 'json',
-                xhrFields: {withCredentials: true},
-                success: (response) => {
-                       console.log(response);
-
-                }
-           });
-         }
-         else{
-
-           //return 10;
-           aDI = aDI.toUpperCase();
-          // console.log(aDI);
-           $.ajax(rootUrl + 'airports?' + 'filter[code]=' + encodeURI(aDI),
-                  {
-                       type: 'GET',
-                       dataType: 'json',
-                       xhrFields: {withCredentials: true},
-                       success: (response) => {
-                          //     console.log("depature id: " + response[0].id);
-                              // console.log(response[0].id);
-                               dID =  response[0].id;
-                               aAI = aAI.toUpperCase();
-                               $.ajax(rootUrl + 'airports?' + 'filter[code]=' + encodeURI(aAI),
-                                      {
-                                           type: 'GET',
-                                           dataType: 'json',
-                                           xhrFields: {withCredentials: true},
-                                           success: (response) => {
-                                             console.log(response.length);
-                                                if(response === undefined || response.length == 0){
-                                                    $('#resultsDiv').empty();
-                                                      $('#resultsDiv').append("No Results");
-                                                      return;
-                                                }
-                                                   aID =  response[0].id;
-                                                   city =response[0].city;
 
 
-                                           },
-
-
-                                      }).then(function(response){
-
-                                        console.log("aid: " + aID);
-                                        console.log("did: " + dID);
-                                        if(aID!=0 && dID !=0){
-                                        insertIntoResultsDiv(dID,aID,false,0);
-                                      }
-
-                                        return;
-                                      });
-
-                       }
-                  }).then(function(response) {
-
-
-
-  }
-
-
-                  );
-         }
-
-
-      //   return id;
-}
-
-//function returns airport arrival_id
-let findAirportArrivalId = (aAI) => {
-  if(aAI.length!=3){
-    $.ajax(rootUrl + 'airports?' + 'filter[name]=' + encodeURI(aAI),
-           {
-                type: 'GET',
-                dataType: 'json',
-                xhrFields: {withCredentials: true},
-                success: (response) => {
-                //  console.log(response);
-                        arrival_id_new = response[0].id;
-                }
-           });
-         }
-         else{
-           aAI = aAI.toUpperCase();
-           $.ajax(rootUrl + 'airports?' + 'filter[code]=' + encodeURI(aAI),
-                  {
-                       type: 'GET',
-                       dataType: 'json',
-                       xhrFields: {withCredentials: true},
-                       success: (response) => {
-                      //   console.log("reeee");
-                        //       console.log(response);
-                               arrival_id_new = response[0].id;
-                       }
-                  });
-         }
-}
 
 //function returns airline_id_new
 /*
@@ -1069,9 +966,7 @@ let findAirlineId = (alId) => {
 }
 */
 //function to create confirmed flights; params id, arrive time
-let createFlightPlan = (flightId, aT) => {
-    $('#confirmationDiv').append("<p>" + aT + "</p>");
-}
+
 function insertIntoResultsDiv(depart,arrive,isReturn,dflightnum){
   console.log('iir:'+depart);
     console.log('iir:'+arrive);
@@ -1276,5 +1171,3 @@ function cf(num){
     }
   });
 }
-
-                      
