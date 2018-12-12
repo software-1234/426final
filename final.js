@@ -297,12 +297,17 @@ data: JSON.stringify(ticket),
                           //  success: (response) => {
                           console.log(data);
                           var city = data.name;
+                          var wi = data.weather[0].icon;
+                          var imageUrl = 'http://openweathermap.org/img/w/' + wi + '.png';
                           //((K-273.15)*1.8)+32
 var temp = Math.round(((data.main.temp -273.15) / 1.8) + 32);
-$('#confirmationDiv').append("Your trip to "+city +" is booked! We hope you have a great vacation!");
-//$(weatherDiv).append('city:'+city + ' ' + 'temp: ' + temp);
+
+$('#confirmationDiv').append("Your trip is booked! We hope you have a great vacation!");
+$(weatherDiv).append('City: '+city + '\xa0\xa0\xa0\xa0\xa0' + 'Temperature: ' + temp + '°F');
 $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">Current Weather Conditions</span>'
-        + '<p>The current weather at '+city+' is: '+ temp +' degrees F </p>  </div> </div> </div> </div>');
+        + '<p>The current weather at your destination is '+ temp +'°F </p> <img id="weatherIcon" src=' +imageUrl + ' width="90" height="90" class="wimage"></div> </div> </div> </div>');
+//$('#weatherIcon').attr('src', imageUrl);
+
 
                                 console.log('hello');
                           //  }
@@ -606,12 +611,9 @@ console.log('flights?filter[departure_id]=' + depart + 'filter[arrival_id]='+arr
             // $('#flightTable tbody').append(result);
          });
          /*
-
-
   $('#resultsDiv').append("<table id='flightTable'> <tr id='headerRow'> <th>Flights</th> <th>Departure Airport</th> <th>Arrival Airport</th> <th>Airline</th> </tr> <table>");
   $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
     $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
-
       $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
         $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
 */
@@ -698,6 +700,7 @@ $('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3>
 $('#submitButton').hide();
   $('#infoDiv').show();
 
+
 }
 
 function refresh(){
@@ -768,3 +771,4 @@ function cf(num){
     }
   });
 }
+

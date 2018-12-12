@@ -63,3 +63,14 @@ p {
 footer.page-footer {
   margin: 0;
 }
+
+.wimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#confirmationDiv {
+    font-size: 25px;
+    color: grey;
+}
