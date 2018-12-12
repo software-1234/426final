@@ -1,4 +1,3 @@
-
 /*jslint browser: true*/
 /*global $, jQuery*/
 
@@ -460,12 +459,9 @@ console.log('flights?filter[departure_id]=' + depart + 'filter[arrival_id]='+arr
             // $('#flightTable tbody').append(result);
          });
          /*
-
-
   $('#resultsDiv').append("<table id='flightTable'> <tr id='headerRow'> <th>Flights</th> <th>Departure Airport</th> <th>Arrival Airport</th> <th>Airline</th> </tr> <table>");
   $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
     $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
-
       $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
         $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
 */
@@ -505,12 +501,9 @@ console.log('flights?filter[departure_id]=' + depart + 'filter[arrival_id]='+arr
             // $('#flightTable tbody').append(result);
          });
          /*
-
-
   $('#resultsDiv').append("<table id='flightTable'> <tr id='headerRow'> <th>Flights</th> <th>Departure Airport</th> <th>Arrival Airport</th> <th>Airline</th> </tr> <table>");
   $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
     $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
-
       $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
         $("  <tr> <td>Jill</td> <td>Smith</td>  <td>50</td> <td>50</td> </tr>").insertAfter($('#headerRow'));
 */
@@ -615,7 +608,6 @@ $(document).ready(function() {
                          }
 
                         /*
-
                         for(var i=0;i<flightResults.length;i++){
                     getAirline(parseInt(response[i].plane_id),flightResults,i);
                     }
@@ -625,7 +617,6 @@ $(document).ready(function() {
                       //   $('#modale').append(modal);
                       //   $('#modal1').modal();
                          $('#flightTable tbody').append(result);
-
                         */
                   }
              });
@@ -649,7 +640,6 @@ $(document).ready(function() {
                                 }
 
                                /*
-
                                for(var i=0;i<flightResults.length;i++){
                            getAirline(parseInt(response[i].plane_id),flightResults,i);
                            }
@@ -659,7 +649,6 @@ $(document).ready(function() {
                              //   $('#modale').append(modal);
                              //   $('#modal1').modal();
                                 $('#flightTable tbody').append(result);
-
                                */
                          }
                     });
@@ -834,6 +823,27 @@ data: JSON.stringify(ticket),
     let last_name = $('#last_name').val();
     let age = $('#age').val();
     let gender= $("input[name='gender']:checked").attr('id');
+    
+    let planeid = 10069;
+    let rowNum = $('#seatRowNumber').val();
+    let rowLetter = $('#seatLetter').val();
+    let rowCabin = $('#seatCabin').val();
+      
+    $.ajax(rootUrl + 'seats?' + 'plane_id=' + encodeURI(planeid) + '&row=' + encodeURI(rowNum) + '&number=' + encodeURI(rowLetter),
+           {
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "seat": {
+                        "plane_id": parseInt(planeid),
+                        "row": parseInt(rowNum),
+                        "number": rowLetter,
+                        "cabin": rowCabin,
+                    }
+                },
+        xhrFields: {withCredentials: true}
+        
+           });
 
 var    ticket = { "ticket": {
         "first_name": first_name,
@@ -1263,18 +1273,16 @@ function selectArrivalFlight(flightNum,arrive,depart,dnum,isRound){
   console.log(flightNum);
   console.log($('#select_'+flightNum).data("flightnum"));
 let anum = $('#select_'+flightNum).data("flightnum");
-console.log("dnum:"+dnum);
-console.log("anum:"+anum);
+
  $('#reserveDiv').hide();
   $('#resultsDiv').hide();
   $('#myHeader').hide();
-if(dnum==anum){
-$('#roundtripButton').hide();
+if(isRound){
+  ('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
+  $('#submitButton').hide();
 }
 else{
-  $('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
-  $('#submitButton').hide();
-
+$('#roundtripButton').hide();
 }
 // ('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
 
@@ -1308,7 +1316,6 @@ $('#tripstable tbody').append(result);
                      }
 
                     /*
-
                     for(var i=0;i<flightResults.length;i++){
                 getAirline(parseInt(response[i].plane_id),flightResults,i);
                 }
@@ -1318,7 +1325,6 @@ $('#tripstable tbody').append(result);
                   //   $('#modale').append(modal);
                   //   $('#modal1').modal();
                      $('#flightTable tbody').append(result);
-
                     */
               }
          });
