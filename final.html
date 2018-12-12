@@ -50,26 +50,29 @@
         <div class="card lighten-2">
           <div class="card-content">
               <h3 class="header center text-lighten-2">Make a Reservation</h3>
-            <div class="row">
-              <div class="input-field col s12">
-                <input placeholder="Departure Airport" id="departAirport" type="text" class="validate">
-                <label class="active" for="departAirport">Flying From</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input placeholder="Arrival Airport" id="arriveAirport" type="text" class="validate">
-                <label class="active" for="arriveAirport">Flying To</label>
-              </div>
+              <div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s3"><a href="#test1">Round Trip</a></li>
+      <li class="tab col s3"><a class="active" href="#test2">One Way</a></li>
+    </ul>
+  </div>
+  <div id="test1" class="col s12">
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Departure Airport" id="departAirport" type="text" class="validate">
+        <label class="active" for="departAirport">Flying From</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input placeholder="Arrival Airport" id="arriveAirport" type="text" class="validate">
+        <label class="active" for="arriveAirport">Flying To</label>
+      </div>
 </div>
 
 
-
-              <!-- <div class="input-field col s6">
-                                <input value="Airline" id="airlineType" type="text" class="validate">
-                                <label class="active" for="airlineType">Preferred Airline</label>
-                            </div>
-                        </div> -->
                         <div class="row">
               <div class="input-field col s6">
                 <input type="date" id="start" name="trip-start" value="2018-12-10" min="2018-12-01" max="2019-12-31">
@@ -83,40 +86,77 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <select id="amount">
+                <!-- <select id="amount">
                   <option value="" disabled selected>How many tickets do you want to book?</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
                   <option value="4">4</option>
                   <option value="5">5</option>
-                </select>
+                </select> -->
 
               </div>
 </div>
-<div id="modale"></div>
-              <!-- <p>Departing Time</p> -->
-              <!-- <div class="row">
-                            <div class="input-field col s6">
-                                <input value="YYYY" id="departYear" type="text" class="validate">
-                                <label class="active" for="departYear">Year</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input value="MM" id="departMonth" type="text" class="validate">
-                                <label class="active" for="departMonth">Month</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input value="DD" id="departDay" type="text" class="validate">
-                                <label class="active" for="departDay">Day</label>
-                            </div>
-                            <div class="input-field col s6">
-                                <input value="00:00" id="departTime" type="text" class="validate">
-                                <label class="active" for="departTime">Time</label>
-                            </div>
-                        </div> -->
+
 
               <button id="searchButton" class="btn waves-effect waves-light" type="submit" name="action">Search
               </button>
+
+  </div>
+  <div id="test2" class="col s12">
+
+<div class="row">
+<div class="input-field col s12">
+  <input placeholder="Departure Airport" id="departAirport1" type="text" class="validate">
+  <label class="active" for="departAirport">Flying From</label>
+</div>
+</div>
+<div class="row">
+<div class="input-field col s12">
+  <input placeholder="Arrival Airport" id="arriveAirport1" type="text" class="validate">
+  <label class="active" for="arriveAirport">Flying To</label>
+</div>
+</div>
+
+
+                      <div class="row">
+            <div class="input-field col s6">
+              <input type="date" id="start1" name="trip-start" value="2018-12-10" min="2018-12-01" max="2019-12-31">
+              <label class="active" for="start">Departure Date</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+
+              <!-- <select >
+                <option value="" disabled selected>How many tickets do you want to book?</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select> -->
+
+            </div>
+</div>
+
+            <button id="searchButton1" class="btn waves-effect waves-light" type="submit" name="action">Search
+            </button>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
 
               <!-- <button id="continueButton" class="btn waves-effect waves-light" type="submit" name="action">Continue
                 <i class="material-icons right">send</i>
@@ -163,6 +203,20 @@
       <div class="input-field col s12">
         <input id="email" type="text" class="validate">
         <label for="email">Email</label>
+      </div>
+    </div>
+      <div class="row">
+      <div class="input-field col s6">
+        <input placeholder="0-100" id="seatRowNumber" type="text" class="validate">
+        <label for="seatRowNumber">Seat Row</label>
+      </div>
+      <div class="input-field col s6">
+        <input placeholder="A,B,C" id="seatLetter" type="text" class="validate">
+        <label for="seatLetter">Seat Letter</label>
+      </div>
+          <div class="input-field col s6">
+        <input placeholder="First Class, Business, Economy" id="seatCabin" type="text" class="validate">
+        <label for="seatCabin">Seat Cabin</label>
       </div>
     </div>
 
@@ -219,7 +273,7 @@
     </div>
   </div>
   <div id="tripspage">
-    
+
     <div id="tripstable">
 
     </div>
