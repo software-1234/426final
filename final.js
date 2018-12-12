@@ -1263,16 +1263,18 @@ function selectArrivalFlight(flightNum,arrive,depart,dnum,isRound){
   console.log(flightNum);
   console.log($('#select_'+flightNum).data("flightnum"));
 let anum = $('#select_'+flightNum).data("flightnum");
-
+console.log("dnum:"+dnum);
+console.log("anum:"+anum);
  $('#reserveDiv').hide();
   $('#resultsDiv').hide();
   $('#myHeader').hide();
-if(isRound){
-  ('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
-  $('#submitButton').hide();
+if(dnum==anum){
+$('#roundtripButton').hide();
 }
 else{
-$('#roundtripButton').hide();
+  $('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
+  $('#submitButton').hide();
+
 }
 // ('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
 
