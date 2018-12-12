@@ -5,9 +5,101 @@
 // arrival_id_new=0, airline_id_new=0, joinedDate=0;
 var rootUrl = "http://comp426.cs.unc.edu:3001/";
 var city;
-
+var amount;
+var toflt;
+var fromflight;
 
 $(document).ready(function() {
+  $('#homebtn').on('click', function(e) {
+    e.preventDefault();
+    $('#homepage').show();
+    $('#tripspage').hide();
+      $('#myHeader').show();
+
+  });
+
+  $('#tripsbtn').on('click', function(e) {
+    e.preventDefault();
+    $('#homepage').hide();
+    $('#myHeader').hide();
+      $('#tripspage').show();
+
+      $.ajax(rootUrl + 'tickets?',
+             {
+                  type: 'GET',
+                  dataType: 'json',
+                  xhrFields: {withCredentials: true},
+                  success: (response) => {
+                         console.log(response);
+                         $('#tripstable').empty();
+                           $('#tripstable').append("<h3>Trips</h3><table id='flightTable'> <thead> <tr id='headerRow'>  <th>Purchase?</th><th> Cancel? </th> <th>First Name</th>  <th>Last Name</th> <th>Gender</th> <th>Price Paid</th></tr> </thead> <tbody> </tbody> <table>");
+                           for(var i=0;i<response.length;i++){
+                             var result;
+                             console.log(response[i].is_purchased);
+                             if(response[i].is_purchased){
+                               result = "<tr class='z-depth-3'><td>Already Purchased</td><td>Cannot Cancel</td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+
+                             }
+                             else{
+                                result = "<tr class='z-depth-3'><td><button class='btn' id='purchase_"+i+"' onclick='pf("+response[i].id+")'>Purchase</button></td><td><button class='btn' id='cancel_"+i+"' onclick='cf("+response[i].id+")'>Cancel</button></td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+                             }
+    $('#tripstable tbody').append(result);
+                         }
+
+                        /*
+
+                        for(var i=0;i<flightResults.length;i++){
+                    getAirline(parseInt(response[i].plane_id),flightResults,i);
+                    }
+                        var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+              //<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+                        console.log("hi");
+                      //   $('#modale').append(modal);
+                      //   $('#modal1').modal();
+                         $('#flightTable tbody').append(result);
+
+                        */
+                  }
+             });
+
+             $.ajax(rootUrl + 'itineraries?',
+                    {
+                         type: 'GET',
+                         dataType: 'json',
+                         xhrFields: {withCredentials: true},
+                         success: (response) => {
+                                console.log(response);
+                                $('#ititable').empty();
+                                  $('#ititable').append("<h3>Itineraries</h3><table id='itiTable'> <thead> <tr id='itiheaderRow'>    <th>Email</th> <th>Confimation Number</th> </tr> </thead> <tbody> </tbody> <table>");
+                                  for(var i=0;i<response.length;i++){
+                                    var result;
+
+
+                                      result = "<tr class='z-depth-3'><td>"+response[i].confirmation_code+"</td><td>"+response[i].email+"</td></tr>";
+
+           $('#ititable tbody').append(result);
+                                }
+
+                               /*
+
+                               for(var i=0;i<flightResults.length;i++){
+                           getAirline(parseInt(response[i].plane_id),flightResults,i);
+                           }
+                               var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+                     //<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+                               console.log("hi");
+                             //   $('#modale').append(modal);
+                             //   $('#modal1').modal();
+                                $('#flightTable tbody').append(result);
+
+                               */
+                         }
+                    });
+
+    });
+    // $.ajax(root_url + "tickets/" +ticket_id,
+
+
 
   function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
@@ -35,7 +127,7 @@ $(document).ready(function() {
             /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
             /*make the matching letters bold:*/
-            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML =  arr[i].substr(0, val.length);
             b.innerHTML += arr[i].substr(val.length);
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
@@ -132,6 +224,41 @@ $(document).ready(function() {
 
   $('#infoDiv').hide();
   $('select').formSelect();
+
+  $('#holdButton').on('click', function(e) {
+    e.preventDefault();
+    console.log("aaaaa");
+    let first_name = $('#first_name').val();
+    let last_name = $('#last_name').val();
+    let age = $('#age').val();
+    let gender= $("input[name='gender']:checked").attr('id');
+
+var    ticket = { "ticket": {
+        "first_name": first_name,
+        "last_name": last_name,
+        "age": parseInt(age),
+        "gender": gender,
+        "is_purchased": false,
+    }
+  };
+    $.ajax(rootUrl + 'tickets?' + 'first_name=' +  encodeURI(first_name)+ '&last_name=' + encodeURI(last_name) + '&age=' + encodeURI(age) + '&gender=' + encodeURI(gender),
+       {
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+
+data: JSON.stringify(ticket),
+
+            xhrFields: {withCredentials: true},
+            success: (response) => {
+                    console.log('success!');
+                    $('#infoDiv').hide();
+                    $('#confirmationDiv').append("Your trip is on hold. Please go to my trips section to complete your purchase or cancel.");
+
+       }
+
+  });
+});
   $('#submitButton').on('click', function(e) {
     e.preventDefault();
     console.log("aaaaa");
@@ -140,20 +267,21 @@ $(document).ready(function() {
     let age = $('#age').val();
     let gender= $("input[name='gender']:checked").attr('id');
 
-
-    $.ajax(rootUrl + 'tickets?' + 'first_name=' +  encodeURI(first_name)+ '&last_name=' + encodeURI(last_name) + '&age=' + encodeURI(age) + '&gender=' + encodeURI(gender),
-       {
-            type: 'POST',
-            dataType: 'json',
-            data: {
-    "ticket": {
+var    ticket = { "ticket": {
         "first_name": first_name,
         "last_name": last_name,
         "age": parseInt(age),
         "gender": gender,
-        "is_purchased": "true",
+        "is_purchased": true,
     }
-},
+  };
+    $.ajax(rootUrl + 'tickets?' + 'first_name=' +  encodeURI(first_name)+ '&last_name=' + encodeURI(last_name) + '&age=' + encodeURI(age) + '&gender=' + encodeURI(gender),
+       {
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+
+data: JSON.stringify(ticket),
 
             xhrFields: {withCredentials: true},
             success: (response) => {
@@ -173,11 +301,13 @@ $(document).ready(function() {
                           var imageUrl = 'http://openweathermap.org/img/w/' + wi + '.png';
                           //((K-273.15)*1.8)+32
 var temp = Math.round(((data.main.temp -273.15) / 1.8) + 32);
+
 $('#confirmationDiv').append("Your trip is booked! We hope you have a great vacation!");
 $(weatherDiv).append('City: '+city + '\xa0\xa0\xa0\xa0\xa0' + 'Temperature: ' + temp + '°F');
 $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">Current Weather Conditions</span>'
         + '<p>The current weather at your destination is '+ temp +'°F </p> <img id="weatherIcon" src=' +imageUrl + ' width="90" height="90" class="wimage"></div> </div> </div> </div>');
 //$('#weatherIcon').attr('src', imageUrl);
+
 
                                 console.log('hello');
                           //  }
@@ -190,8 +320,58 @@ $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="c
   });
 });
     //puts value into joinedDate, depature_id_new, arrival_id_new
+    $('#roundtripButton').on('click', function(e) {
+      e.preventDefault();
+      var email = $('#email').val();
+      var itinerary =   {"itinerary": {
+    "confirmation_code": makeid(),
+    "email":             email
+  }
+}
+      $.ajax(rootUrl + 'itineraries?',
+         {
+              type: 'POST',
+              dataType: 'json',
+              contentType: 'application/json',
 
-    $('#searchButton').on('click', function() {
+    data: JSON.stringify(itinerary),
+
+              xhrFields: {withCredentials: true},
+              success: (response) => {
+                      console.log('success!');
+
+                      $('#infoDiv').hide();
+                      $.get("http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=962b8524d03d93b4c38d49b00d0002cf",function(data){
+
+                         //{
+                            //  type: 'GET',
+                            //  dataType: 'json',
+                            //  xhrFields: {withCredentials: true},
+                            //  success: (response) => {
+                            console.log(data);
+                            var city = data.name;
+                            //((K-273.15)*1.8)+32
+  var temp = Math.round(((data.main.temp -273.15) / 1.8) + 32);
+  $('#confirmationDiv').append("Your trip to "+city +" is booked! We hope you have a great vacation!");
+  //$(weatherDiv).append('city:'+city + ' ' + 'temp: ' + temp);
+  $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="card blue-grey darken-1"> <div class="card-content white-text"> <span class="card-title">Current Weather Conditions</span>'
+          + '<p>The current weather at '+city+' is: '+ temp +' degrees F </p>  </div> </div> </div> </div>');
+
+                                  console.log('hello');
+                            //  }
+                      //   });
+
+            //  }
+         });
+                      //$('#infoDiv').hide();
+
+
+
+    }
+  });
+});
+
+        $('#searchButton').on('click', function() {
         let fromAirport = $('#departAirport').val();
         var abbreviation = fromAirport.split('(');
         fromAirport = abbreviation[1].substring(0,3);
@@ -200,8 +380,11 @@ $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="c
         var abbreviation1 = toAirport.split('(');
         toAirport = abbreviation1[1].substring(0,3);
         let pickedAirline = $('#airlineType').val();
+        let amount = $("select#amount option:checked").attr('value');
+        console.log("amount: " + amount);
         console.log("FROM: " + fromAirport);
           console.log("TO: " +toAirport);
+
         // let fromYear = $('#departYear').val();
         // let fromMonth = $('#departMonth').val();
         // let fromDay = $('#departDay').val();
@@ -211,7 +394,7 @@ $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="c
         // joinedDate = fromYear + '-' + fromMonth + '-' + fromDay + 'T' + fromTime + ':00.000Z';
 
         //puts value into departure_id_new
-        findAirportDepartureId(fromAirport,toAirport);
+        findAirportDepartureId(fromAirport,toAirport,true);
 
         //console.log(departure_id_new);
         //puts value into arrival_id_new
@@ -248,7 +431,16 @@ $(weatherDiv).append(' <div class="row"> <div class="col s12 m6">  <div class="c
 //helper functions --------------------------------------------
 
 //function returns airport departure_id
-function findAirportDepartureId(aDI,aAI) {
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  for (var i = 0; i < 6; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+function findAirportDepartureId(aDI,aAI,isreturn) {
   //console.log("start");
   var dID = 0;
   var aID = 0;
@@ -301,10 +493,11 @@ function findAirportDepartureId(aDI,aAI) {
 
 
                                       }).then(function(response){
+
                                         console.log("aid: " + aID);
                                         console.log("did: " + dID);
                                         if(aID!=0 && dID !=0){
-                                        insertIntoResultsDiv(dID,aID);
+                                        insertIntoResultsDiv(dID,aID,false,0);
                                       }
 
                                         return;
@@ -374,8 +567,9 @@ let findAirlineId = (alId) => {
 let createFlightPlan = (flightId, aT) => {
     $('#confirmationDiv').append("<p>" + aT + "</p>");
 }
-function insertIntoResultsDiv(depart,arrive){
-
+function insertIntoResultsDiv(depart,arrive,isReturn,dflightnum){
+  console.log('iir:'+depart);
+    console.log('iir:'+arrive);
     var flightResults;
     console.log(depart);
     console.log(arrive);
@@ -394,9 +588,19 @@ console.log('flights?filter[departure_id]=' + depart + 'filter[arrival_id]='+arr
                     //  arrival_id_new = response[0].id;
 
                     $('#resultsDiv').empty();
+                      let departureDiv = "<div id='dd'><h3>Please select your departure</h3></div>";
+
+                      if(!isReturn){
+                          $('#resultsDiv').append(departureDiv);
+                        }
+                        else{
+                          departureDiv = "<div id='dd'><h3>Please select your return</h3></div>";
+                            $('#resultsDiv').append(departureDiv);
+                        }
                       $('#resultsDiv').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Which One?</th>    <th>Airline</th> <th>Flight Number</th> <th>Departure Time</th> <th>Arrival Time</th> <th>Plane Model</th> <th>View Seatmap</th> </tr> </thead> <tbody> </tbody> <table>");
                       for(var i=0;i<flightResults.length;i++){
-                getAirline(parseInt(response[i].plane_id),flightResults,i);
+
+                getAirline(flightResults[i].airline_id,flightResults,i,parseInt(response[i].plane_id),arrive,depart,isReturn,dflightnum);
               }
               //  var result = "<tr><td>"++"/td><td>" +  parseInt(flightResults[0].number)  + "</td><td>" +flightResults[0].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[0].arrives_at.toString().substring(11,16) + "</td></tr>";
               }
@@ -418,10 +622,14 @@ function getPlane(){
 
 }
 
-function getAirline(airlineID,flightResults,number,planeID){
+function getAirline(airlineID,flightResults,number,planeID,arrive,depart,isReturn,dflightnum){
   //console.log("hhh");
   var pid=0;
   var seatLink;
+  console.log("aaaaa:" +arrive);
+  console.log("aaaaa:" +depart);
+  console.log("aaaaa:" +isReturn);
+  console.log(depart);
   $.ajax(rootUrl + 'airlines?' + 'filter[id]=' + airlineID,
          {
               type: 'GET',
@@ -439,10 +647,17 @@ function getAirline(airlineID,flightResults,number,planeID){
                               seatLink = response[number].seatmap_url;
                             }
                           }).then(function(){
-                var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+var result;
+              if(!isReturn){
+              result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectDepartureFlight("+number+","+arrive+","+depart+","+dflightnum+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+              }
+              else{
+                                result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectArrivalFlight("+number+","+arrive+","+depart+","+dflightnum+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+              }
 //<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
                 console.log("hi");
-                 $('.modal').modal();
+              //   $('#modale').append(modal);
+              //   $('#modal1').modal();
                  $('#flightTable tbody').append(result);
               //  console.log(response);
 
@@ -454,11 +669,106 @@ function getAirline(airlineID,flightResults,number,planeID){
          }
        });
 }
-function selectFlight(flightNum){
+function selectDepartureFlight(flightNum,arrive,depart,dnum){
+
+ //$('#resultsDiv').append(departureDiv);
   console.log(flightNum);
   console.log($('#select_'+flightNum).data("flightnum"));
+  let num = $('#select_'+flightNum).data("flightnum");
+  let return1 = true;
+
+  insertIntoResultsDiv(arrive,depart,return1,num,num);
+// $('#reserveDiv').hide();
+//  $('#resultsDiv').hide();
+//  $('#myHeader').hide();
+
+//  $('#infoDiv').show();
+
+}
+
+function selectArrivalFlight(flightNum,arrive,depart,dnum){
+//  $('#dd').innerHTML( "<div id='dd'><h3>Please select your return</h3></div>");
+  console.log(flightNum);
+  console.log($('#select_'+flightNum).data("flightnum"));
+let anum = $('#select_'+flightNum).data("flightnum");
+//  insertIntoResultsDiv(arrive,depart,return);
  $('#reserveDiv').hide();
   $('#resultsDiv').hide();
   $('#myHeader').hide();
+
+$('#flightinfo').append("<h3>You selected departure flight number: "+dnum+"</h3><br><h3>You selected arrival flight number: "+anum+"</h3>");
+$('#submitButton').hide();
   $('#infoDiv').show();
+
+
 }
+
+function refresh(){
+  $.ajax(rootUrl + 'tickets?',
+         {
+              type: 'GET',
+              dataType: 'json',
+              xhrFields: {withCredentials: true},
+              success: (response) => {
+                     console.log(response);
+                     $('#tripstable').empty();
+                       $('#tripstable').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Purchase?</th><th> Cancel? </th> <th>First Name</th>  <th>Last Name</th> <th>Gender</th> <th>Price Paid</th></tr> </thead> <tbody> </tbody> <table>");
+                       for(var i=0;i<response.length;i++){
+                         var result;
+                         console.log(response[i].is_purchased);
+                         if(response[i].is_purchased){
+                           result = "<tr class='z-depth-3'><td>Already Purchased</td><td>Cannot Cancel</td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+
+                         }
+                         else{
+                            result = "<tr class='z-depth-3'><td><button class='btn' id='purchase_"+i+"' onclick='pf("+response[i].id+")'>Purchase</button></td><td><button class='btn' id='cancel_"+i+"'>Cancel</button></td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+                         }
+$('#tripstable tbody').append(result);
+                     }
+
+                    /*
+
+                    for(var i=0;i<flightResults.length;i++){
+                getAirline(parseInt(response[i].plane_id),flightResults,i);
+                }
+                    var result = "<tr class='z-depth-3'><td><button class='waves-effect waves-light btn-small' id='select_"+number+"' data-flightnum="+parseInt(flightResults[number].number) +" onclick='selectFlight("+number+")'>Select this one</button></td><td>"+response[number].name+"</td><td>" +  parseInt(flightResults[number].number)  + "</td><td>" +flightResults[number].departs_at.toString().substring(11,16)+ "</td><td>" + flightResults[number].arrives_at.toString().substring(11,16) + "</td><td>"+ pid+"</td><td>"+ "<a class='waves-effect waves-light modal-trigger' href='"+seatLink+"'><i class='material-icons'>airline_seat_legroom_normal</i></a>";
+          //<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+                    console.log("hi");
+                  //   $('#modale').append(modal);
+                  //   $('#modal1').modal();
+                     $('#flightTable tbody').append(result);
+
+                    */
+              }
+         });
+}
+function pf(num){
+  console.log('hi');
+  var data = {ticket:{is_purchased:true}};
+  $.ajax(rootUrl + "tickets/" +num,{
+
+    type: 'PUT',
+    dataType: 'json',
+    xhrFields: {withCredentials: true},
+    contentType: 'application/json',
+    data:JSON.stringify(data),
+    success: (response) => {
+           console.log(response);
+           refresh();
+
+  }})
+}
+function cf(num){
+  console.log('hi');
+
+  $.ajax(rootUrl + "tickets/" +num,{
+
+    type: 'DELETE',
+    xhrFields: {withCredentials: true},
+    success: (response) =>{
+      console.log('hi');
+      refresh();
+    }
+  });
+}
+
