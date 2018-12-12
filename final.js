@@ -593,16 +593,16 @@ $(document).ready(function() {
                   success: (response) => {
                          console.log(response);
                          $('#tripstable').empty();
-                           $('#tripstable').append("<h3>Trips</h3><table id='flightTable'> <thead> <tr id='headerRow'>  <th>Purchase?</th><th> Cancel? </th> <th>First Name</th>  <th>Last Name</th> <th>Gender</th> <th>Price Paid</th></tr> </thead> <tbody> </tbody> <table>");
+                           $('#tripstable').append("<h3>Trips</h3><table id='flightTable'> <thead> <tr id='headerRow'>  <th>Purchase?</th><th> Cancel? </th> <th>First Name</th>  <th>Last Name</th> <th>Gender</th> <th>Seat</th></tr> </thead> <tbody> </tbody> <table>");
                            for(var i=0;i<response.length;i++){
                              var result;
                              console.log(response[i].is_purchased);
                              if(response[i].is_purchased){
-                               result = "<tr class='z-depth-3'><td>Already Purchased</td><td>Cannot Cancel</td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+                               result = "<tr class='z-depth-3'><td>Already Purchased</td><td>Cannot Cancel</td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].info+"</td></tr>";
 
                              }
                              else{
-                                result = "<tr class='z-depth-3'><td><button class='btn' id='purchase_"+i+"' onclick='pf("+response[i].id+")'>Purchase</button></td><td><button class='btn' id='cancel_"+i+"' onclick='cf("+response[i].id+")'>Cancel</button></td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+                                result = "<tr class='z-depth-3'><td><button class='btn' id='purchase_"+i+"' onclick='pf("+response[i].id+")'>Purchase</button></td><td><button class='btn' id='cancel_"+i+"' onclick='cf("+response[i].id+")'>Cancel</button></td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].info+"</td></tr>";
                              }
     $('#tripstable tbody').append(result);
                          }
@@ -851,6 +851,7 @@ var    ticket = { "ticket": {
         "age": parseInt(age),
         "gender": gender,
         "is_purchased": true,
+        "info": rowNum + ' ' + rowLetter,
     }
   };
     $.ajax(rootUrl + 'tickets?' + 'first_name=' +  encodeURI(first_name)+ '&last_name=' + encodeURI(last_name) + '&age=' + encodeURI(age) + '&gender=' + encodeURI(gender),
@@ -1301,16 +1302,16 @@ function refresh(){
               success: (response) => {
                      console.log(response);
                      $('#tripstable').empty();
-                       $('#tripstable').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Purchase?</th><th> Cancel? </th> <th>First Name</th>  <th>Last Name</th> <th>Gender</th> <th>Price Paid</th></tr> </thead> <tbody> </tbody> <table>");
+                       $('#tripstable').append("<table id='flightTable'> <thead> <tr id='headerRow'>  <th>Purchase?</th><th> Cancel? </th> <th>First Name</th>  <th>Last Name</th> <th>Gender</th> <th>Seat</th></tr> </thead> <tbody> </tbody> <table>");
                        for(var i=0;i<response.length;i++){
                          var result;
                          console.log(response[i].is_purchased);
                          if(response[i].is_purchased){
-                           result = "<tr class='z-depth-3'><td>Already Purchased</td><td>Cannot Cancel</td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+                           result = "<tr class='z-depth-3'><td>Already Purchased</td><td>Cannot Cancel</td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].info+"</td></tr>";
 
                          }
                          else{
-                            result = "<tr class='z-depth-3'><td><button class='btn' id='purchase_"+i+"' onclick='pf("+response[i].id+")'>Purchase</button></td><td><button class='btn' id='cancel_"+i+"'>Cancel</button></td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].price_paid+"</td></tr>";
+                            result = "<tr class='z-depth-3'><td><button class='btn' id='purchase_"+i+"' onclick='pf("+response[i].id+")'>Purchase</button></td><td><button class='btn' id='cancel_"+i+"'>Cancel</button></td><td>"+response[i].first_name+"</td><td>"+response[i].last_name+"</td><td>"+response[i].gender+"</td><td>"+response[i].info+"</td></tr>";
                          }
 $('#tripstable tbody').append(result);
                      }
